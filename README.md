@@ -1,4 +1,4 @@
-# Project _NAME_
+# Project: Shark and Fish Game
 
 [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Here-Cheatsheet)
 
@@ -6,86 +6,82 @@ _REPLACE OR REMOVE EVERYTING BETWEEN "\_"_
 
 ### Student Info
 
--   Name: _YOUR NAME_
--   Section: _##_
+-   Name: Rylie Love
+-   Section: 01
 
 ## Simulation Design
 
-_A brief explanation of your simulation._
+You are a hungry shark trying eat enough fish to be the biggest shark in the ocean. But watch out for other sharks and jellyfish!
 
 ### Controls
 
--   _List all of the actions the player can have in your simulation_
-    -   _Include how to preform each action ( keyboard, mouse, UI Input )_
-    -   _Include what impact an action has in the simulation ( if is could be unclear )_
+Controls: WASD
 
-## _Agent 1 Name_
+Getting closer to a fish makes the fish flee.
 
-_A brief explanation of this agent._
+Touching a shark makes you smaller.
 
-### _State 1 Name_
+Touching a jellyfish stuns you for a second.
 
-**Objective:** _A brief explanation of this state's objective._
+Once you are big enough to eat the other sharks and you eat them, the game is over.
 
-#### Steering Behaviors
+## Shark
 
-- _List all behaviors used by this state_
-   - _If behavior has input data list it here_
-   - _eg, Flee - nearest Agent2_
-- Obstacles - _List all obstacle types this state avoids_
-- Seperation - _List all agents this state seperates from_
-   
-#### State Transistions
+If a shark collides with the player, the player will decrease in size.
 
-- _List all the ways this agent can transition to this state_
-   - _eg, When this agent gets within range of Agent2_
-   - _eg, When this agent has reached target of State2_
-   
-### _State 2 Name_
+### Wander State
 
-**Objective:** _A brief explanation of this state's objective._
+The sharks wander trying to find the player. They must be in a certain range of the player to seek them out. 
 
 #### Steering Behaviors
 
-- _List all behaviors used by this state_
-- Obstacles - _List all obstacle types this state avoids_
-- Seperation - _List all agents this state seperates from_
+Behaviors: Wander (not in range of the player or jellyfish) and Flee (if near jellyfish)
+    
+Obstacles: jellyfish
+
+Seperation: other NPC sharks
    
 #### State Transistions
 
-- _List all the ways this agent can transition to this state_
+When the shark goes out of range of the player or the jellyfish.
 
-## _Agent 2 Name_
+When the shark collides with the player.
+   
+### Attack State
 
-_A brief explanation of this agent._
-
-### _State 1 Name_
-
-**Objective:** _A brief explanation of this state's objective._
+When in range of the player, the shark will seek the player with a little bit of increased speed.
 
 #### Steering Behaviors
 
-- _List all behaviors used by this state_
-- Obstacles - _List all obstacle types this state avoids_
-- Seperation - _List all agents this state seperates from_
+Behaviors: Seek (if in range of player)
+
+Obstacles: jellyfish
+
+Seperation: other NPC sharks
    
 #### State Transistions
 
-- _List all the ways this agent can transition to this state_
-   
-### _State 2 Name_
+When the shark gets in range with the player. 
 
-**Objective:** _A brief explanation of this state's objective._
+
+## Jellyfish
+
+The jellyfish float around the screen and will stun the player if they collide.
+
+### Wander State
+
+Wander around the screen hoping to bump into a player or NPC sharks.
 
 #### Steering Behaviors
 
-- _List all behaviors used by this state_
-- Obstacles - _List all obstacle types this state avoids_
-- Seperation - _List all agents this state seperates from_
+Behaviors: Wander and stay within bounds
+
+Seperation: other jellyfish
    
 #### State Transistions
 
-- _List all the ways this agent can transition to this state_
+They are always in this state.
+
 
 ## Sources
 
