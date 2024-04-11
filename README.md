@@ -39,12 +39,6 @@ Obstacles: None
 
 Seperation: other NPC sharks
 
-- _List all behaviors used by this agent_
-   - _If a behavior has input data list it here_
-   - _eg, Flee - nearest Agent2_
-- Obstacles - _List all obstacle types this state avoids_
-- Seperation - _List all agents this state seperates from_
-   
 
 
 ## Jellyfish
