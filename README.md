@@ -25,62 +25,54 @@ Touching a jellyfish stuns you for a second.
 
 Once you are big enough to eat the other sharks and you eat them, the game is over.
 
+
+
 ## Shark
 
 If a shark collides with the player, the player will decrease in size.
 
-### Wander State
-
-The sharks wander trying to find the player. They must be in a certain range of the player to seek them out. 
-
 #### Steering Behaviors
 
-Behaviors: Wander (not in range of the player or jellyfish) and Flee (if near jellyfish)
+Behaviors: Wander (not in range of the player), Seek (if in range of player)
     
-Obstacles: jellyfish
+Obstacles: None
 
 Seperation: other NPC sharks
+
+- _List all behaviors used by this agent_
+   - _If a behavior has input data list it here_
+   - _eg, Flee - nearest Agent2_
+- Obstacles - _List all obstacle types this state avoids_
+- Seperation - _List all agents this state seperates from_
    
-#### State Transistions
-
-When the shark goes out of range of the player or the jellyfish.
-
-When the shark collides with the player.
-   
-### Attack State
-
-When in range of the player, the shark will seek the player with a little bit of increased speed.
-
-#### Steering Behaviors
-
-Behaviors: Seek (if in range of player)
-
-Obstacles: jellyfish
-
-Seperation: other NPC sharks
-   
-#### State Transistions
-
-When the shark gets in range with the player. 
 
 
 ## Jellyfish
 
 The jellyfish float around the screen and will stun the player if they collide.
 
-### Wander State
-
-Wander around the screen hoping to bump into a player or NPC sharks.
-
 #### Steering Behaviors
 
 Behaviors: Wander and stay within bounds
 
-Seperation: other jellyfish
-   
-#### State Transistions
+Obstacles: None
 
-They are always in this state.
+Seperation: other jellyfish
+
+
+
+## Fish
+
+The fish flee around the screen from the player. They are the players food.
+
+#### Steering Behaviors
+
+Behaviors: Flee
+
+Obstacles: Coral (that is placed around the screen)
+
+Seperation: other fish
+
 
 
 ## Sources
