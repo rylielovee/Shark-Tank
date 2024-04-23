@@ -11,6 +11,9 @@ public abstract class Agent : MonoBehaviour
     [SerializeField]
     protected PhysicsObject physicsObject;
 
+    //[SerializeField]
+    //protected Obstacle obstacle;
+
     protected Vector3 totalForces = Vector3.zero;
 
     [SerializeField]
@@ -20,6 +23,9 @@ public abstract class Agent : MonoBehaviour
     float maxDistance = 1.0f;
 
     float randAngle;
+
+    // list of all positions of obstacles agent has found (each agent has there own list
+    protected List<Vector3> foundObstaclePositions = new List<Vector3>();
 
 
     // Start is called before the first frame update
@@ -104,8 +110,6 @@ public abstract class Agent : MonoBehaviour
         wanderTarget.x += Mathf.Cos(randAngle) * radius;
         wanderTarget.y += Mathf.Sin(randAngle) * radius;
 
-        Debug.Log(randAngle);
-
         return Seek(wanderTarget);
     }
 
@@ -119,7 +123,7 @@ public abstract class Agent : MonoBehaviour
         {
             float distance = Vector3.Distance(transform.position, agent.transform.position);  //find distance between agent and neighbors
 
-            if (distance < maxDistance)
+            if (distance < maxDistance && agent != this)
             {
                 separationForce = Flee(agent);
             }
@@ -127,6 +131,48 @@ public abstract class Agent : MonoBehaviour
         return separationForce;
     }
 
+
+    // avoid obstacles
+    public Vector3 AvoidObstacles()
+    {
+        foundObstaclePositions.Clear();
+
+        Vector3 steeringForce = Vector3.zero;
+
+        Vector3 directionToObstacle = Vector3.zero;
+
+        float forwardDot, rightDot;
+
+        foreach (Obstacle obstacle in AgentManager.Instance.obstacles)
+        {
+            directionToObstacle = obstacle.transform.position - transform.position;
+
+            // calc foward and right dot products
+            forwardDot = Vector3.Dot(physicsObject.Direction, directionToObstacle);
+            rightDot = Vector3.Dot(transform.right, directionToObstacle);
+
+            // calc safe distance
+            float safeDis = 2f + obstacle.radius;
+
+            // if obstacle is in front and within safe distance
+            if (forwardDot > 0f && forwardDot < safeDis)
+            {   
+                // if obstacle is within side bounds
+                if (Mathf.Abs(rightDot) < obstacle.radius + physicsObject.radius)
+                {
+                    // Found something to avoid
+                    foundObstaclePositions.Add(obstacle.transform.position);
+
+                    // calc desired velocity
+                    Vector3 desiredVelocity = transform.right * -Mathf.Sign(rightDot) * physicsObject.MaxSpeed;
+
+                    // calc steering force
+                    steeringForce += desiredVelocity - physicsObject.Velocity;
+                }
+            }
+        }
+        return steeringForce;
+    }
 
     // stay in bounds of screen function
     public Vector3 StayInBounds()

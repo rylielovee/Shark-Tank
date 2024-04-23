@@ -10,6 +10,11 @@ public class PhysicsObject : MonoBehaviour
         get { return velocity; }
     }
 
+    public Vector3 Direction
+    {
+        get { return direction; }
+    }
+
     [SerializeField]
     float mass = 1f, maxSpeed;    // mass is 1 because default float value is 0 which would end up having division by 0
 
@@ -17,6 +22,8 @@ public class PhysicsObject : MonoBehaviour
     {
         get { return maxSpeed; }
     }
+
+    public float radius = 1f;
 
 
     // Start is called before the first frame update

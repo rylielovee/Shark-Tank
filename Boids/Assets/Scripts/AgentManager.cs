@@ -33,6 +33,8 @@ public class AgentManager : Singleton<AgentManager>
 
     public List<Agent> agents = new List<Agent>();
 
+    public List<Obstacle> obstacles = new List<Obstacle>();
+
     Vector2 screenSize = Vector2.zero;
 
     public Vector2 ScreenSize { get { return screenSize; } }

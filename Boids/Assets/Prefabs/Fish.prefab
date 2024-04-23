@@ -74,8 +74,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: b131d6f8c681eeb4b965c65b39b46252, type: 3}
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 21300000, guid: aed69e46fb266864db9decc50213dccd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -115,7 +115,7 @@ MonoBehaviour:
   physicsObject: {fileID: 8453023076970595087}
   maxForce: 5
   maxDistance: 0.3
-  separationWeight: 3
+  separationWeight: 2
   boundsWeight: 1
   wanderWeight: 1
   wanderTime: 1.3
