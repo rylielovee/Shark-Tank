@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class Pufferfish : MonoBehaviour
@@ -37,6 +36,14 @@ public class Pufferfish : MonoBehaviour
 
     void Update()
     {
+        // scale can't go below 0.2f
+        if (AgentManager.Instance.player.transform.localScale.x <= 0.2f ||
+                        AgentManager.Instance.player.transform.localScale.y <= 0.2f ||
+                        AgentManager.Instance.player.transform.localScale.z <= 0.2f)
+        {
+            AgentManager.Instance.player.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+        }
+
         PufferfishCollides();
         min = spriteRenderer.bounds.min;
         max = spriteRenderer.bounds.max;
@@ -51,7 +58,6 @@ public class Pufferfish : MonoBehaviour
             puff.min.y < movementController.max.y)
         {
             puff.spriteRenderer.sprite = madSprite;
-            AgentManager.Instance.player.transform.localScale += new Vector3(-0.05f, -0.05f, -0.05f);
             return true;
         }
         else
