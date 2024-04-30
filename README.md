@@ -2,8 +2,6 @@
 
 [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Here-Cheatsheet)
 
-_REPLACE OR REMOVE EVERYTING BETWEEN "\_"_
-
 ### Student Info
 
 -   Name: Rylie Love
@@ -19,12 +17,9 @@ Controls: WASD
 
 Getting closer to a fish makes the fish flee.
 
-Touching a shark makes you smaller.
+Eating a fish makes you bigger.
 
-Touching a jellyfish stuns you for a second.
-
-Once you are big enough to eat the other sharks and you eat them, the game is over.
-
+Touching a shark, jellyfish, or pufferfish makes you smaller.
 
 
 ## Shark
@@ -33,9 +28,9 @@ If a shark collides with the player, the player will decrease in size.
 
 #### Steering Behaviors
 
-Behaviors: Wander (not in range of the player), Seek (if in range of player)
+Behaviors: Wander (not in range of the player), Seek (if in range of player), stay within bounds
     
-Obstacles: None
+Obstacles: Pufferfish
 
 Seperation: other NPC sharks
 
@@ -43,13 +38,13 @@ Seperation: other NPC sharks
 
 ## Jellyfish
 
-The jellyfish float around the screen and will stun the player if they collide.
+If a jellyfish collides with the player, the player will decrease in size.
 
 #### Steering Behaviors
 
 Behaviors: Wander and stay within bounds
 
-Obstacles: None
+Obstacles: Pufferfish
 
 Seperation: other jellyfish
 
@@ -61,30 +56,23 @@ The fish flee around the screen from the player. They are the players food.
 
 #### Steering Behaviors
 
-Behaviors: Flee
+Behaviors: Flee, flocking(seperation, cohesion, alignment), wander, stay within bounds
 
-Obstacles: Coral (that is placed around the screen)
+Obstacles: None
 
 Seperation: other fish
 
 
 
 ## Sources
-
--   _List all project sources here –models, textures, sound clips, assets, etc._
--   _If an asset is from the Unity store, include a link to the page and the author’s name_
+- Art by Rylie Love
 
 ## Make it Your Own
-
-- _List out what you added to your game to make it different for you_
-- _If you will add more agents or states make sure to list here and add it to the documention above_
-- _If you will add your own assets make sure to list it here and add it to the Sources section
+- Made all the art
+- Made it so the player shark becomes biggeer and smaller depending on what the player does / collides with
 
 ## Known Issues
 
-_List any errors, lack of error checking, or specific information that I need to know to run your program_
-
 ### Requirements not completed
 
-_If you did not complete a project requirement, notate that here_
 
