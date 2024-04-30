@@ -5,14 +5,8 @@ using UnityEngine;
 
 public abstract class Agent : MonoBehaviour
 {
-    //[SerializeField]
-    //public AgentManager agentManager;
-
     [SerializeField]
-    protected PhysicsObject physicsObject;
-
-    //[SerializeField]
-    //protected Obstacle obstacle;
+    public PhysicsObject physicsObject;
 
     protected Vector3 totalForces = Vector3.zero;
 
@@ -24,6 +18,11 @@ public abstract class Agent : MonoBehaviour
 
     float randAngle;
 
+    [SerializeField]
+    float safeDis;
+
+    public Vector3 min, max;
+
     // list of all positions of obstacles agent has found (each agent has there own list
     protected List<Vector3> foundObstaclePositions = new List<Vector3>();
 
@@ -31,9 +30,7 @@ public abstract class Agent : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        randAngle = Random.Range(0f, Mathf.PI * 2f);
-
-        //Debug.Log(AgentManager.Instance.agents.Count);
+        randAngle = Random.Range(0f, 360f);
     }
 
     // Update is called once per frame
@@ -103,12 +100,12 @@ public abstract class Agent : MonoBehaviour
     {
         Vector3 futurePosition = CalcFuturePosition(time);
 
-        randAngle += Random.Range(-0.3f, 0.3f);   // want in radians for later
+        randAngle += Random.Range(-10f, 10f);   // want in radians for later
 
         Vector3 wanderTarget = futurePosition;  // set wanderTarget to future position to make it easier later
 
-        wanderTarget.x += Mathf.Cos(randAngle) * radius;
-        wanderTarget.y += Mathf.Sin(randAngle) * radius;
+        wanderTarget.x += Mathf.Cos(randAngle * Mathf.Deg2Rad) * radius;
+        wanderTarget.y += Mathf.Sin(randAngle * Mathf.Deg2Rad) * radius;
 
         return Seek(wanderTarget);
     }
@@ -123,7 +120,7 @@ public abstract class Agent : MonoBehaviour
         {
             float distance = Vector3.Distance(transform.position, agent.transform.position);  //find distance between agent and neighbors
 
-            if (distance < maxDistance && agent != this)
+            if (distance < 0.5f && agent != this)
             {
                 separationForce = Flee(agent);
             }
@@ -131,6 +128,57 @@ public abstract class Agent : MonoBehaviour
         return separationForce;
     }
 
+    // Cohesion
+    public Vector3 Cohesion(List<Agent> agents)
+    {
+        Vector3 cohesionForce = Vector3.zero;
+
+        Vector3 posVectorSum = Vector3.zero;
+
+        int count = 0;
+
+        foreach (Agent fish in agents)
+        {
+            float distance = Vector3.Distance(transform.position, fish.transform.position);  //find distance between agent and neighbors
+            
+            if (distance < maxDistance && fish != this)
+            {
+                posVectorSum += fish.transform.position;
+                count++;
+            }
+
+            Vector3 centroid = posVectorSum / count;
+
+            cohesionForce = Seek(centroid);
+
+        }
+
+        return cohesionForce;
+    }
+
+    // Alignment
+    public Vector3 Alignment(List<Agent> agents) 
+    {
+        Vector3 alignmentForce = Vector3.zero;
+
+        Vector3 velocitySum = Vector3.zero;
+
+        foreach (Agent fish in agents)
+        {
+            float distance = Vector3.Distance(transform.position, fish.transform.position);  //find distance between agent and neighbors
+
+            if (distance < maxDistance && fish != this)
+            {
+                velocitySum += fish.physicsObject.Velocity;
+            }
+        }
+
+        Vector3 desiredVelocity = velocitySum.normalized * physicsObject.MaxSpeed;
+
+        alignmentForce = desiredVelocity - physicsObject.Velocity;
+
+        return alignmentForce;
+    }
 
     // avoid obstacles
     public Vector3 AvoidObstacles()
@@ -139,32 +187,35 @@ public abstract class Agent : MonoBehaviour
 
         Vector3 steeringForce = Vector3.zero;
 
-        Vector3 directionToObstacle = Vector3.zero;
+        Vector3 vectorFromPlayerToPufferfish = Vector3.zero;
 
         float forwardDot, rightDot;
 
-        foreach (Obstacle obstacle in AgentManager.Instance.obstacles)
+        Vector3 right = Vector3.Cross(Vector3.back, physicsObject.Direction);  // instead of transform.right
+
+        foreach (Pufferfish pufferfish in AgentManager.Instance.pufferfishList)
         {
-            directionToObstacle = obstacle.transform.position - transform.position;
+            vectorFromPlayerToPufferfish = pufferfish.transform.position - transform.position;
 
             // calc foward and right dot products
-            forwardDot = Vector3.Dot(physicsObject.Direction, directionToObstacle);
-            rightDot = Vector3.Dot(transform.right, directionToObstacle);
+            forwardDot = Vector3.Dot(physicsObject.Direction, vectorFromPlayerToPufferfish);
+            rightDot = Vector3.Dot(right, vectorFromPlayerToPufferfish);
 
             // calc safe distance
-            float safeDis = 2f + obstacle.radius;
+            float safe = safeDis + pufferfish.radius;
 
             // if obstacle is in front and within safe distance
             if (forwardDot > 0f && forwardDot < safeDis)
             {   
                 // if obstacle is within side bounds
-                if (Mathf.Abs(rightDot) < obstacle.radius + physicsObject.radius)
+                if (Mathf.Abs(rightDot) < pufferfish.radius + physicsObject.radius)
                 {
                     // Found something to avoid
-                    foundObstaclePositions.Add(obstacle.transform.position);
+                    foundObstaclePositions.Add(pufferfish.transform.position);
 
                     // calc desired velocity
-                    Vector3 desiredVelocity = transform.right * -Mathf.Sign(rightDot) * physicsObject.MaxSpeed;
+                    Vector3 desiredVelocity = right * -Mathf.Sign(rightDot) * physicsObject.MaxSpeed 
+                        * 1/ vectorFromPlayerToPufferfish.magnitude;  // when sensing multiple obstacles, avoid obstacle closest to you
 
                     // calc steering force
                     steeringForce += desiredVelocity - physicsObject.Velocity;

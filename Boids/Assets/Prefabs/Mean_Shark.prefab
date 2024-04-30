@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6191047041371803177}
   - component: {fileID: 3379228007841401928}
   - component: {fileID: 9091740038719045361}
-  - component: {fileID: 7264106825598250351}
+  - component: {fileID: 4926391276607976673}
   m_Layer: 0
   m_Name: Mean_Shark
   m_TagString: Untagged
@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
+  m_LocalScale: {x: 0.35, y: 0.35, z: 0.35}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -99,8 +99,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mass: 1
-  maxSpeed: 5
---- !u!114 &7264106825598250351
+  maxSpeed: 1
+  radius: 1.35
+  doesRotate: 0
+--- !u!114 &4926391276607976673
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -109,14 +111,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 3720723457469098413}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc655ed89f25684498042894f25c86c2, type: 3}
+  m_Script: {fileID: 11500000, guid: c77e448795b745546b7f355e7764bcfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   physicsObject: {fileID: 9091740038719045361}
   maxForce: 5
-  maxDistance: 3
-  separationWeight: 2
-  boundsWeight: 1
-  wanderWeight: 1
-  wanderTime: 1
+  maxDistance: 1
+  safeDis: 2
+  wanderTime: 2
   wanderRadius: 0.6
+  spriteRenderer: {fileID: 3379228007841401928}
+  wanderWeight: 1
+  seekWeight: 2
+  boundsWeight: 4
+  obstacleWeight: 2
+  separationWeight: 2

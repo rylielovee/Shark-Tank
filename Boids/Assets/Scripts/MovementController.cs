@@ -18,6 +18,12 @@ public class MovementController : MonoBehaviour
     [SerializeField]
     float speed;   // whatever speed we put in inspector will override this
 
+    public float mouthRadius;  // when checking for collisions with player mouth and fish
+
+    public float regularRadius;  // when checking for collisions with player and enemies
+
+    public float mouthDistance;
+
     bool facingRight = true;
 
     public Vector3 Direction
@@ -25,10 +31,17 @@ public class MovementController : MonoBehaviour
         set { direction = value.normalized; }
     }
 
+    public SpriteRenderer playerSpriteR;
+
+    public Vector3 min, max;
+
 
     void Start()
     {
         objectPosition = transform.position;   // sets object to the position we put it in the editor
+
+        min = playerSpriteR.bounds.min;
+        max = playerSpriteR.bounds.max;
     }
 
 
@@ -49,8 +62,12 @@ public class MovementController : MonoBehaviour
         if ((hValue < 0 && facingRight) || (hValue > 0 && !facingRight))
         {
             facingRight = !facingRight;
+            mouthDistance = -mouthDistance;
             transform.Rotate(new Vector3(0, 180, 0));
         }
+
+        min = playerSpriteR.bounds.min;
+        max = playerSpriteR.bounds.max;
 
         StopAtEdges();
     }
@@ -88,5 +105,21 @@ public class MovementController : MonoBehaviour
             transform.position = objectPosition;
         }
 
+    }
+
+    
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        
+        if (playerSpriteR != null)   // when you reference spriteRenderer but can't because its null before play, use if statement
+        {
+            Gizmos.DrawWireCube(transform.position, playerSpriteR.bounds.size);   // takes in center and size
+        }
+        //Gizmos.DrawWireSphere(transform.position + new Vector3(mouthDistance, 0f, 0f), mouthRadius);
+
+        //Gizmos.color = Color.green;
+
+        //Gizmos.DrawWireSphere(transform.position, regularRadius);
     }
 }

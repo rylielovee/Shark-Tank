@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 9192293846059335931}
   - component: {fileID: 8186013627997529104}
   - component: {fileID: 8453023076970595087}
-  - component: {fileID: -6887300993489632471}
+  - component: {fileID: 2565070457001964416}
   m_Layer: 0
   m_Name: Fish
   m_TagString: Untagged
@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: aed69e46fb266864db9decc50213dccd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ebde7f43affdc854f839a1a564a7dcb0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -99,8 +99,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mass: 1
-  maxSpeed: 5
---- !u!114 &-6887300993489632471
+  maxSpeed: 10
+  radius: 0.2
+  doesRotate: 1
+--- !u!114 &2565070457001964416
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -109,14 +111,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 7023544791711484492}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc655ed89f25684498042894f25c86c2, type: 3}
+  m_Script: {fileID: 11500000, guid: 1cce5a83d2b8a86478af645b0b5bdd5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   physicsObject: {fileID: 8453023076970595087}
   maxForce: 5
-  maxDistance: 0.3
-  separationWeight: 2
-  boundsWeight: 1
+  maxDistance: 2
+  safeDis: 2
+  min: {x: 0, y: 0, z: 0}
+  max: {x: 0, y: 0, z: 0}
+  wanderTime: 0.8
+  wanderRadius: 0.3
+  separationWeight: 4
+  cohesionWeight: 2
+  alignmentWeight: 2
   wanderWeight: 1
-  wanderTime: 1.3
-  wanderRadius: 0.6
+  fleeWeight: 7
+  boundsWeight: 6
+  obstacleWeight: 6

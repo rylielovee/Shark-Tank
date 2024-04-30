@@ -2,29 +2,49 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Flocker : Agent
+public class Jellyfish : Agent
 {
     [SerializeField]
-    float separationWeight = 1f, boundsWeight = 1f, wanderWeight = 1f;
+    float wanderTime, wanderRadius;
+    
+    [SerializeField]
+    SpriteRenderer spriteRenderer;
 
     [SerializeField]
-    float wanderTime, wanderRadius;
+    float wanderWeight, boundsWeight, obstacleWeight, separationWeight;
+
+    void Start()
+    {
+        min = spriteRenderer.bounds.min;
+        max = spriteRenderer.bounds.max;
+    }
 
     // this method was created in parent class but each child class has to implement it separately
     protected override Vector3 CalculateSteeringForces()
     {
-        Vector3 separationForce = Separation(AgentManager.Instance.agents) * separationWeight;
+        min = spriteRenderer.bounds.min;
+        max = spriteRenderer.bounds.max;
 
         Vector3 wanderForce = Wander(wanderTime, wanderRadius) * wanderWeight;
 
         Vector3 boundsForce = StayInBounds() * boundsWeight;
-    
-        return separationForce + boundsForce + wanderForce;
+
+        Vector3 obstacleForce = AvoidObstacles() * obstacleWeight;
+
+        Vector3 separationForce = Separation(AgentManager.Instance.jellyfishList) * separationWeight;
+
+        return wanderForce + boundsForce + obstacleForce + separationForce;
     }
 
-    // Drawing Gizmos function
+
+
     private void OnDrawGizmos()
     {
+        Gizmos.color = Color.blue;
+
+        Gizmos.DrawWireCube(transform.position, spriteRenderer.bounds.size);
+
+        /*
         Gizmos.color = Color.magenta;
 
         Vector3 futurePosition = CalcFuturePosition(wanderTime);
@@ -39,5 +59,8 @@ public class Flocker : Agent
         wanderTarget.y += Mathf.Sin(randAngle) * wanderRadius;
 
         Gizmos.DrawLine(transform.position, wanderTarget);
+        */
     }
+
+
 }

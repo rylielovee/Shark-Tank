@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3386226199982039105}
   - component: {fileID: 6247088640090341079}
   - component: {fileID: -842119445444366371}
-  - component: {fileID: -8907119774432826220}
+  - component: {fileID: 1305404248211671266}
   m_Layer: 0
   m_Name: Jellyfish
   m_TagString: Untagged
@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -99,8 +99,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mass: 1
-  maxSpeed: 2
---- !u!114 &-8907119774432826220
+  maxSpeed: 0.5
+  radius: 0.6
+  doesRotate: 0
+--- !u!114 &1305404248211671266
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -109,14 +111,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 8774000630376022244}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc655ed89f25684498042894f25c86c2, type: 3}
+  m_Script: {fileID: 11500000, guid: cfcee5bff7b86004bbc4e4ed1d452a72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   physicsObject: {fileID: -842119445444366371}
   maxForce: 5
-  maxDistance: 0.3
-  separationWeight: 2
-  boundsWeight: 1
+  maxDistance: 2
+  safeDis: 2
+  min: {x: 0, y: 0, z: 0}
+  max: {x: 0, y: 0, z: 0}
+  wanderTime: 0.8
+  wanderRadius: 0.6
+  spriteRenderer: {fileID: 6247088640090341079}
   wanderWeight: 1
-  wanderTime: 1.7
-  wanderRadius: 0.3
+  boundsWeight: 6
+  obstacleWeight: 6
+  separationWeight: 4

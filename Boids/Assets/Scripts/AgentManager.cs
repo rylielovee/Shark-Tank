@@ -13,6 +13,8 @@ public class AgentManager : Singleton<AgentManager>
         RedFish
     }
 
+    public GameObject player;
+
     [SerializeField]
     Agent fishAgent;
 
@@ -29,11 +31,22 @@ public class AgentManager : Singleton<AgentManager>
     Agent jellyfishAgent;
 
     [SerializeField]
-    int spawnCount = 10;
+    int sharkCount, jellyfishCount, fishCount;
 
+    // agent list
     public List<Agent> agents = new List<Agent>();
 
-    public List<Obstacle> obstacles = new List<Obstacle>();
+    // fish list
+    public List<Agent> fishList = new List<Agent>();
+
+    // shark list
+    public List<Agent> sharkList = new List<Agent>();
+
+    // jellyfish list
+    public List<Agent> jellyfishList = new List<Agent>();
+
+    // obstacle list
+    public List<Pufferfish> pufferfishList = new List<Pufferfish>();
 
     Vector2 screenSize = Vector2.zero;
 
@@ -53,17 +66,29 @@ public class AgentManager : Singleton<AgentManager>
 
     void Spawn()
     {
-        for (int i = 0; i < spawnCount; i++)
+        // shark spawning
+        for (int i = 0; i < sharkCount; i++)
+        {
+            Agent newShark = Instantiate(sharkAgent, PickRandomPoint(), Quaternion.identity);
+            agents.Add(newShark);
+            sharkList.Add(newShark);
+        }
+
+        // jellyfish spawning
+        for (int i = 0; i < jellyfishCount; i++)
+        {
+            Agent newJellyfish = Instantiate(jellyfishAgent, PickRandomPoint(), Quaternion.identity);
+            agents.Add(newJellyfish);
+            jellyfishList.Add(newJellyfish);
+        }
+
+        // fish spawning
+        for (int i = 0; i < fishCount; i++)
         {
             Agent newFish = Instantiate(fishAgent, PickRandomPoint(), Quaternion.identity);
-            //agents.Add(Instantiate(fishAgent, PickRandomPoint(), Quaternion.identity));
-
             fishAgentSpriteRenderer.sprite = fishAgentSprites[(int)PickRandomFish()];
-            
             agents.Add(newFish);
-
-            agents.Add(Instantiate(sharkAgent, PickRandomPoint(), Quaternion.identity));
-            agents.Add(Instantiate(jellyfishAgent, PickRandomPoint(), Quaternion.identity));
+            fishList.Add(newFish);
         }
     }
 

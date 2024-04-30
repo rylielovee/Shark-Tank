@@ -25,6 +25,8 @@ public class PhysicsObject : MonoBehaviour
 
     public float radius = 1f;
 
+    public bool doesRotate = true;
+
 
     // Start is called before the first frame update
     void Start()
@@ -47,7 +49,11 @@ public class PhysicsObject : MonoBehaviour
 
         transform.position = position;
 
-        transform.rotation = Quaternion.LookRotation(Vector3.back, direction);
+        if (doesRotate == true)
+        {
+            transform.rotation = Quaternion.LookRotation(Vector3.back, direction);
+
+        }
 
         // zero out acceleration - New
         acceleration = Vector3.zero;
@@ -58,12 +64,6 @@ public class PhysicsObject : MonoBehaviour
     public void ApplyForce(Vector3 force)
     {
         acceleration += force / mass;   // += REALLY IMPORTANT!
-    }
-
-    public void ChangePosition()
-    {
-        position.x = Random.Range(-8, 8);
-        position.y = Random.Range(-4, 4);
     }
 
 }
