@@ -1,4 +1,4 @@
-# Project: Shark and Fish Game
+# Project: Shark Tank
 
 [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Here-Cheatsheet)
 
