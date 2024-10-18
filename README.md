@@ -1,78 +1,24 @@
-# Project: Shark Tank
+# Academic Project: Shark Tank
 
-[Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Here-Cheatsheet)
+You are a hungry shark trying eat enough fish to be the biggest shark in the ocean. But watch out for other sharks, jellyfish, and pufferfish!
 
-### Student Info
+## Simulation/Game Design
 
--   Name: Rylie Love
--   Section: 01
+- This is a 2D interactive simulation/game made in Unity of an underwater virtual world populated with NPC aquatic animals.
+- The purpose of this project was to demonstrate an understanding of forces and steering behaviors, including flee, seek, flocking, and obstacle avoidance.
+- This was coded without the use of Unity’s built in collision methods.
+- All art was created by me.
 
-## Simulation Design
+## Controls
 
-You are a hungry shark trying eat enough fish to be the biggest shark in the ocean. But watch out for other sharks and jellyfish!
+- Movement: WASD
+- Player grows in size when eating fish
+- Player shrinks when colliding with other sharks, jellyfish, or pufferfish
 
-### Controls
+## NPC Behaviors
 
-Controls: WASD
-
-Getting closer to a fish makes the fish flee.
-
-Eating a fish makes you bigger.
-
-Touching a shark, jellyfish, or pufferfish makes you smaller.
-
-
-## Shark
-
-If a shark collides with the player, the player will decrease in size.
-
-#### Steering Behaviors
-
-Behaviors: Wander (not in range of the player), Seek (if in range of player), stay within bounds
-    
-Obstacles: Pufferfish
-
-Seperation: other NPC sharks
-
-
-
-## Jellyfish
-
-If a jellyfish collides with the player, the player will decrease in size.
-
-#### Steering Behaviors
-
-Behaviors: Wander and stay within bounds
-
-Obstacles: Pufferfish
-
-Seperation: other jellyfish
-
-
-
-## Fish
-
-The fish flee around the screen from the player. They are the players food.
-
-#### Steering Behaviors
-
-Behaviors: Flee, flocking(seperation, cohesion, alignment), wander, stay within bounds
-
-Obstacles: None
-
-Seperation: other fish
-
-
-
-## Sources
-- Art by Rylie Love
-
-## Make it Your Own
-- Made all the art
-- Made it so the player shark becomes biggeer and smaller depending on what the player does / collides with
-
-## Known Issues
-
-### Requirements not completed
-
-
+- Sharks: seeks player when in range, otherwise wanders
+- Fish: flees from player when in range, otherwise uses flocking behaviors (seperation, cohesion, and alignment)
+- Pufferfish: stationary, puffs up when in range of player
+- Jellyfish: wanders
+- All have the behavior to stay within bounds
